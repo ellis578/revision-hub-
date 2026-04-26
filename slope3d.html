@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Slope 3D Style Game</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: black;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="game"></canvas>
+
+<script>
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+// player position
+let lane = 0;
+let distance = 0;
+
+// track segments
+let segments = [];
+
+function createTrack() {
+  for (let i = 0; i < 200; i++) {
+    segments.push({
+      z: i * 10,
+      curve: (Math.random() - 0.5) * 2,
+      color: i % 2 === 0 ? "#111" : "#222"
+    });
+  }
+}
+
+createTrack();
+
+// controls
+let keys = {};
+document.addEventListener("keydown", e => keys[e.key] = true);
+document.addEventListener("keyup", e => keys[e.key] = false);
+
+function update() {
+  if (keys["ArrowLeft"]) lane -= 2;
+  if (keys["ArrowRight"]) lane += 2;
+
+  if (lane > 60) lane = 60;
+  if (lane < -60) lane = -60;
+
+  distance += 0.5;
+}
+
+function draw() {
+  ctx.fillStyle = "black";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  let centerX = canvas.width / 2;
+  let centerY = canvas.height / 2;
+  let depth = 200;
+
+  for (let i = 0; i < segments.length; i++) {
+    let seg = segments[i];
+
+    let z = seg.z - distance;
+    if (z <= 0) continue;
+
+    let scale = depth / z;
+
+    let x = centerX + (lane + seg.curve * z) * scale;
+    let y = centerY + scale * 50;
+    let width = scale * 200;
+
+    ctx.fillStyle = seg.color;
+    ctx.fillRect(x - width/2, y, width, 10);
+  }
+
+  // ball
+  ctx.fillStyle = "lime";
+  ctx.beginPath();
+  ctx.arc(centerX + lane, canvas.height - 120, 15, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+function loop() {
+  update();
+  draw();
+  requestAnimationFrame(loop);
+}
+
+loop();
+</script>
+
+</body>
+</html>
