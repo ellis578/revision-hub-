@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Revision Hub</title>
+  <style>
+    body {
+      font-family: Arial;
+      margin: 0;
+      background: #f2f4f8;
+    }
+
+    header {
+      background: #1f2a44;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .container {
+      text-align: center;
+      padding: 30px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      width: 320px;
+      margin: auto;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+
+    input {
+      width: 90%;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 10px;
+      margin-top: 10px;
+      width: 95%;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #library {
+      display: none;
+      padding: 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .tile {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      transition: 0.2s;
+    }
+
+    .tile:hover {
+      transform: scale(1.05);
+      background: #e9f0ff;
+    }
+
+    #gameScreen {
+      display: none;
+      padding: 20px;
+    }
+
+    iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+      border-radius: 10px;
+    }
+
+    .back {
+      background: #1f2a44;
+      color: white;
+      padding: 10px;
+      border: none;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>📚 Revision Hub</h1>
+  <p>Study Tools • Practice • Resources</p>
+</header>
+
+<!-- LOGIN -->
+<div class="container" id="login">
+  <div class="card">
+    <h2>🔐 Enter Access Password</h2>
+    <p>Hint: ask the owner 👀</p>
+
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="checkPassword()">Unlock</button>
+  </div>
+</div>
+
+<!-- GAME LIBRARY -->
+<div id="library">
+  <h2 style="text-align:center;">🎮 Game Library Unlocked</h2>
+
+  <div class="grid">
+
+    <div class="tile" onclick="openGame('https://www.htmlgames.com/games/2048/')">
+      <h3>2048</h3>
+      <p>Number puzzle</p>
+    </div>
+
+    <div class="tile" onclick="openGame('https://www.google.com/fbx?fbx=snake_arcade')">
+      <h3>Snake</h3>
+      <p>Classic arcade</p>
+    </div>
+
+    <div class="tile" onclick="openGame('https://play2048.co/')">
+      <h3>2048 Alt</h3>
+      <p>Different version</p>
+    </div>
+
+    <div class="tile" onclick="openGame('https://www.google.com/fbx?fbx=tetris')">
+      <h3>Tetris</h3>
+      <p>Block stacking</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- GAME SCREEN -->
+<div id="gameScreen">
+  <button class="back" onclick="back()">⬅ Back</button>
+  <iframe id="frame"></iframe>
+</div>
+
+<script>
+const correctPassword = "study123"; // change this
+
+function checkPassword() {
+  let input = document.getElementById("password").value;
+
+  if (input === correctPassword) {
+    document.getElementById("login").style.display = "none";
+    document.getElementById("library").style.display = "block";
+  } else {
+    alert("❌ Wrong password");
+  }
+}
+
+function openGame(url) {
+  document.getElementById("library").style.display = "none";
+  document.getElementById("gameScreen").style.display = "block";
+  document.getElementById("frame").src = url;
+}
+
+function back() {
+  document.getElementById("gameScreen").style.display = "none";
+  document.getElementById("library").style.display = "block";
+}
+</script>
+
+</body>
+</html>
