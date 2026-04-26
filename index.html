@@ -16,9 +16,9 @@
       text-align: center;
     }
 
-    .container {
-      text-align: center;
-      padding: 30px;
+    #library {
+      display: none;
+      padding: 20px;
     }
 
     .card {
@@ -28,26 +28,20 @@
       margin: auto;
       border-radius: 10px;
       box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      text-align: center;
     }
 
     input {
       width: 90%;
       padding: 10px;
       margin-top: 10px;
-      font-size: 16px;
     }
 
     button {
       padding: 10px;
       margin-top: 10px;
       width: 95%;
-      font-size: 16px;
       cursor: pointer;
-    }
-
-    #library {
-      display: none;
-      padding: 20px;
     }
 
     .grid {
@@ -64,6 +58,7 @@
       cursor: pointer;
       box-shadow: 0 3px 10px rgba(0,0,0,0.1);
       transition: 0.2s;
+      text-align: center;
     }
 
     .tile:hover {
@@ -89,7 +84,6 @@
       padding: 10px;
       border: none;
       margin-bottom: 10px;
-      cursor: pointer;
     }
   </style>
 </head>
@@ -98,66 +92,58 @@
 
 <header>
   <h1>📚 Revision Hub</h1>
-  <p>Study Tools • Practice • Resources</p>
+  <p>Study • Tools • Games</p>
 </header>
 
 <!-- LOGIN -->
-<div class="container" id="login">
-  <div class="card">
-    <h2>🔐 Enter Access Password</h2>
-    <p>Hint: ask the owner 👀</p>
-
-    <input type="password" id="password" placeholder="Password">
-    <button onclick="checkPassword()">Unlock</button>
-  </div>
+<div class="card" id="login">
+  <h2>🔐 Enter Password</h2>
+  <input type="password" id="pass" placeholder="Password">
+  <button onclick="check()">Unlock</button>
 </div>
 
 <!-- GAME LIBRARY -->
 <div id="library">
-  <h2 style="text-align:center;">🎮 Game Library Unlocked</h2>
+  <h2 style="text-align:center;">🎮 Game Library</h2>
 
   <div class="grid">
 
     <div class="tile" onclick="openGame('https://www.htmlgames.com/games/2048/')">
       <h3>2048</h3>
-      <p>Number puzzle</p>
+      <p>Puzzle game</p>
     </div>
 
     <div class="tile" onclick="openGame('https://www.google.com/fbx?fbx=snake_arcade')">
       <h3>Snake</h3>
-      <p>Classic arcade</p>
+      <p>Classic snake</p>
     </div>
 
-    <div class="tile" onclick="openGame('https://play2048.co/')">
-      <h3>2048 Alt</h3>
-      <p>Different version</p>
-    </div>
-
-    <div class="tile" onclick="openGame('https://www.google.com/fbx?fbx=tetris')">
-      <h3>Tetris</h3>
-      <p>Block stacking</p>
+    <!-- 🔥 YOUR NEW GAME ADDED HERE -->
+    <div class="tile" onclick="openGame('slope3d.html')">
+      <h3>⚡ Slope 3D</h3>
+      <p>Endless runner</p>
     </div>
 
   </div>
 </div>
 
-<!-- GAME SCREEN -->
+<!-- GAME VIEW -->
 <div id="gameScreen">
   <button class="back" onclick="back()">⬅ Back</button>
   <iframe id="frame"></iframe>
 </div>
 
 <script>
-const correctPassword = "study123"; // change this
+const correctPassword = "study123";
 
-function checkPassword() {
-  let input = document.getElementById("password").value;
+function check() {
+  let input = document.getElementById("pass").value;
 
   if (input === correctPassword) {
     document.getElementById("login").style.display = "none";
     document.getElementById("library").style.display = "block";
   } else {
-    alert("❌ Wrong password");
+    alert("Wrong password");
   }
 }
 
